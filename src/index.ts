@@ -7,6 +7,7 @@
 //
 // Edit the skin itself in src/components/videojs (shadcn source); this file only packages it.
 import './components/videojs/video/skin';
+import './components/videojs/styles/themes/baseline.css';
 import template from './components/videojs/video/skin.html?raw';
 
 const PLACEHOLDER = 'Add a compatible media component here.';

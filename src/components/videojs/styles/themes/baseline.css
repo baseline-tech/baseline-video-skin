@@ -1,0 +1,86 @@
+@layer base.theme, base.preset, base.preferences;
+
+/*
+ * Baseline colors over the Neutral skin, from baseline-rails' tailwind.colors.js. Dark surfaces match the
+ * livestream scorebug (gray-900 panels, gray-700 dividers). Kept apart from the shadcn source so
+ * `npx shadcn add @videojs/video --overwrite` leaves it alone.
+ *
+ * Public properties keep working: --media-accent-color drives the slider fill and, darkened, every surface
+ * that holds text; --media-accent-text-color sets that text.
+ */
+@layer base.theme {
+  .media-skin[data-theme="neutral"] {
+    --media-default-accent-color: #03aa43; /* primary-500 */
+    --media-default-accent-text-color: #fff;
+
+    --media-background: #101828; /* gray-900 */
+    --media-foreground: #fff;
+    --media-controls: rgb(16 24 40 / 0.35);
+    --media-popover: rgb(16 24 40 / 0.92); /* scorebug panel */
+    --media-popover-foreground: #fff;
+    --media-muted: rgb(255 255 255 / 0.15);
+    --media-muted-foreground: #98a2b3; /* gray-400 */
+    --media-border: #344054; /* gray-700 */
+    --media-ring: #fff;
+    --media-backdrop: #101828;
+    --media-live-color: #f04438; /* error-500 */
+
+    /*
+     * Fills (time and volume sliders) use the accent itself: non-text, 5.8:1 on gray-900. White text on #03AA43 is
+     * only 3.1:1, so surfaces that hold text (menu highlight, badge, dialog button) use the accent darkened to about
+     * primary-700 (#0B7032): white on it is 6.1:1.
+     */
+    --media-accent: color-mix(in oklab, var(--media-primary) 75%, black);
+    --media-accent-foreground: var(--media-accent-text-color, #fff);
+    /* No contrast-color(): it would judge the undarkened accent. */
+    --media-primary-foreground: var(--media-accent-text-color, var(--media-default-accent-text-color));
+    --media-button-highlight: rgb(255 255 255 / 0.15);
+
+    /* Keep the video sharp while the controls and menus are open. */
+    --media-backdrop-filter-surface: none;
+    --media-backdrop-filter-indicator: none;
+  }
+}
+
+/*
+ * The preset scrim darkens the whole frame (20–50%) while the controls show. Keep only a short strip behind the
+ * controls so the picture above stays watchable.
+ */
+@layer base.preset {
+  .media-skin:is([data-preset="video"], [data-preset="live-video"])[data-theme="neutral"] {
+    --media-controls-gradient: linear-gradient(
+      to top,
+      rgb(16 24 40 / 0.55),
+      rgb(16 24 40 / 0.2) calc(var(--media-spacing) * 14),
+      transparent calc(var(--media-spacing) * 24)
+    );
+  }
+}
+
+@layer components {
+  @scope (.media-skin[data-theme="neutral"]) {
+    /* Icon buttons sit on the video with no bar behind them, so they highlight with a tint, not a block of green. */
+    @media (hover: hover) {
+      .media-button:not([aria-disabled="true"]):hover {
+        background-color: var(--media-button-highlight);
+        color: inherit;
+      }
+    }
+
+    .media-button:where(:focus-visible, [aria-expanded="true"], [data-highlighted]):where(
+        :not([aria-disabled="true"])
+      ) {
+      background-color: var(--media-button-highlight);
+      color: inherit;
+    }
+
+    .media-dialog-close {
+      background-color: var(--media-accent) !important;
+    }
+
+    /* The dimmed value ("1×", "Off") on a highlighted row: 0.65 is 3.6:1 on the darkened accent, 0.85 is 5:1. */
+    .media-menu-trigger-item:where(:focus-visible, [aria-expanded="true"], [data-highlighted]) .media-menu-hint-label {
+      opacity: 0.85;
+    }
+  }
+}

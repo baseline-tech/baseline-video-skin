@@ -44,7 +44,8 @@ npm run build   # dist/skin.js
 ```
 
 - Change controls and layout in `src/components/videojs/video/skin.html`.
-- Change colors, sizes and motion in `src/components/videojs/styles/themes/theme.css` (all skins) or `neutral.css`.
+- Change Baseline colors in `src/components/videojs/styles/themes/baseline.css`. It layers over the shadcn files, so an `--overwrite` update keeps it.
+- Change sizes and motion in `src/components/videojs/styles/themes/theme.css` (all skins) or `neutral.css`.
 - `src/index.ts` only packages the skin as `<baseline-video-skin>`; it rarely needs edits.
 
 ## Update Video.js
