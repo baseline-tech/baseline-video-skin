@@ -24,20 +24,16 @@ The skin's CSS ships inside `dist/skin.js`; no stylesheet link needed.
 
 ### From the CDN
 
-The bundle imports `@videojs/html/*` by bare specifier, so a CDN page maps it with an import map:
+Not verified yet. The bundle imports `@videojs/html/*` by bare specifier, so a CDN page needs those imports resolved to the same single copy of Video.js the page uses. jsDelivr's `/+esm` endpoint rewrites bare imports, so load both from it at exact versions:
 
 ```html
-<script type="importmap">
-  {
-    "imports": {
-      "@videojs/html/": "https://cdn.jsdelivr.net/npm/@videojs/html@10.1.0/dist/default/",
-      "@baseline/videojs-skin": "https://cdn.jsdelivr.net/npm/@baseline/videojs-skin@0.1.0/dist/skin.js"
-    }
-  }
+<script type="module">
+  import 'https://cdn.jsdelivr.net/npm/@videojs/html@10.1.0/video/player/+esm';
+  import 'https://cdn.jsdelivr.net/npm/@baseline/videojs-skin@0.1.0/+esm';
 </script>
 ```
 
-Pin exact versions on the CDN, never ranges.
+Check after the first publish that only one copy of `@videojs/html` loads (Network tab). Pin exact versions on the CDN, never ranges.
 
 ## Develop
 
