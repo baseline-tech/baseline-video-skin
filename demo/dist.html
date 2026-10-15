@@ -13,7 +13,10 @@
     <main>
       <video-player>
         <baseline-video-skin style="display: block; aspect-ratio: 16 / 9">
-          <video src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM/highest.mp4" playsinline></video>
+          <video src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM/highest.mp4" playsinline crossorigin>
+            <track kind="chapters" src="/demo/chapters.vtt" srclang="en" default>
+            <track kind="captions" src="/demo/captions.vtt" srclang="en" label="English">
+          </video>
         </baseline-video-skin>
       </video-player>
     </main>
