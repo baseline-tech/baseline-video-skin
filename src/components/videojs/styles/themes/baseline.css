@@ -35,6 +35,25 @@
     /* No contrast-color(): it would judge the undarkened accent. */
     --media-primary-foreground: var(--media-accent-text-color, var(--media-default-accent-text-color));
     --media-button-highlight: rgb(255 255 255 / 0.15);
+
+    /* Keep the video sharp while the controls and menus are open. */
+    --media-backdrop-filter-surface: none;
+    --media-backdrop-filter-indicator: none;
+  }
+}
+
+/*
+ * The preset scrim darkens the whole frame (20–50%) while the controls show. Keep only a short strip behind the
+ * controls so the picture above stays watchable.
+ */
+@layer base.preset {
+  .media-skin:is([data-preset="video"], [data-preset="live-video"])[data-theme="neutral"] {
+    --media-controls-gradient: linear-gradient(
+      to top,
+      rgb(16 24 40 / 0.55),
+      rgb(16 24 40 / 0.2) calc(var(--media-spacing) * 14),
+      transparent calc(var(--media-spacing) * 24)
+    );
   }
 }
 
