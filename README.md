@@ -1,0 +1,70 @@
+# @baseline/videojs-skin
+
+Baseline's Video.js 10 player skin, built from the Neutral skin source.
+
+## Use
+
+`@videojs/html` is a peer dependency: the page provides one copy of Video.js, this package only adds the skin.
+
+```js
+import '@videojs/html/video/player';
+import '@videojs/html/media/hlsjs-video'; // if you play HLS
+import '@baseline/videojs-skin';
+```
+
+```html
+<video-player>
+  <baseline-video-skin style="display: block; aspect-ratio: 16 / 9">
+    <hls-video src="https://…/index.m3u8" playsinline></hls-video>
+  </baseline-video-skin>
+</video-player>
+```
+
+The skin's CSS ships inside `dist/skin.js`; no stylesheet link needed.
+
+### From the CDN
+
+The bundle imports `@videojs/html/*` by bare specifier, so a CDN page maps it with an import map:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "@videojs/html/": "https://cdn.jsdelivr.net/npm/@videojs/html@10.1.0/dist/default/",
+      "@baseline/videojs-skin": "https://cdn.jsdelivr.net/npm/@baseline/videojs-skin@0.1.0/dist/skin.js"
+    }
+  }
+</script>
+```
+
+Pin exact versions on the CDN, never ranges.
+
+## Develop
+
+```bash
+npm install
+npm run dev     # demo at http://localhost:5173 (source) and /demo/dist.html (built bundle, after npm run build)
+npm run build   # dist/skin.js
+```
+
+- Change controls and layout in `src/components/videojs/video/skin.html`.
+- Change colors, sizes and motion in `src/components/videojs/styles/themes/theme.css` (all skins) or `neutral.css`.
+- `src/index.ts` only packages the skin as `<baseline-video-skin>`; it rarely needs edits.
+
+## Update Video.js
+
+The skin source matches one Video.js version (10.1.0). To move to a new one, commit first, then:
+
+```bash
+npx shadcn@latest add @videojs/video --overwrite
+```
+
+Review the diff and re-apply our changes. Then bump `@videojs/html` in `peerDependencies` and `devDependencies`, and bump this package's version.
+
+## Release
+
+```bash
+npm version patch   # or minor/major
+npm publish         # builds first (prepublishOnly)
+git push --follow-tags
+```

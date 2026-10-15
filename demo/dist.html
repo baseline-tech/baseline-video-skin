@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Baseline video skin</title>
+    <style>
+      body { margin: 0; padding: 24px; background: #111; font-family: system-ui, sans-serif; }
+      main { max-width: 960px; margin: 0 auto; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <video-player>
+        <baseline-video-skin style="display: block; aspect-ratio: 16 / 9">
+          <video src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM/highest.mp4" playsinline></video>
+        </baseline-video-skin>
+      </video-player>
+    </main>
+    <script type="module" src="/demo/dist.ts"></script>
+  </body>
+</html>
