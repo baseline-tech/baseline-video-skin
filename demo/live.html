@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Baseline video skin: live</title>
+    <style>
+      body { margin: 0; padding: 24px; background: #111; font-family: system-ui, sans-serif; }
+      main { max-width: 960px; margin: 0 auto; }
+
+      /* Mirrors baseline-rails' VideoPlayerComponent for a match in play. The skin's own control bar shows LIVE. */
+      .video-player {
+        --media-accent-color: #03aa43;
+        --media-accent-text-color: #fff;
+        --media-font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        --media-border-radius: var(--video-player-radius, 0.25rem);
+        position: relative; aspect-ratio: 16 / 9; overflow: clip; border-radius: 0.25rem; background: #101828;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="video-player">
+        <live-video-player style="display: block; width: 100%; height: 100%">
+          <baseline-video-skin style="display: block; width: 100%; height: 100%">
+            <hlsjs-video src="https://demo.unified-streaming.com/k8s/live/stable/live.isml/.m3u8"
+                         autoplay muted playsinline preload="auto" style="display: block; width: 100%; height: 100%"></hlsjs-video>
+          </baseline-video-skin>
+        </live-video-player>
+      </div>
+    </main>
+    <script type="module" src="/demo/live.ts"></script>
+  </body>
+</html>

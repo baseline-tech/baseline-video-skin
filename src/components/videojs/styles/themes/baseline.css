@@ -78,6 +78,53 @@
       background-color: var(--media-accent) !important;
     }
 
+    /*
+     * YouTube-style live indicator, from the upstream live-video skin: a grey dot while behind (click to jump to
+     * live), red at the live edge. Hidden on VOD; on live media it replaces the meaningless "07:30 / 10:10".
+     */
+    .media-live-button {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(var(--media-spacing) * 1.5);
+      width: auto;
+      padding-inline: calc(var(--media-spacing) * 2);
+      font-size: calc(var(--media-spacing) * 3);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .media-live-button:not([data-live]) {
+      display: none;
+    }
+
+    .media-live-button::before {
+      content: "";
+      flex-shrink: 0;
+      width: calc(var(--media-spacing) * 2);
+      height: calc(var(--media-spacing) * 2);
+      border-radius: 9999px;
+      background-color: var(--media-muted-foreground);
+      transition: background-color var(--media-duration, 0.15s) cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .media-live-button[data-live-edge]::before {
+      background-color: var(--media-live-color);
+    }
+
+    /* At the edge the button is aria-disabled (nothing to jump to), but it reads as a status, so don't dim it. */
+    .media-live-button[data-live-edge] {
+      cursor: default;
+      opacity: 1;
+    }
+
+    /* The container is the scope root, so it needs :scope to match. */
+    :scope:has(.media-live-button[data-live]) .media-time-group {
+      display: none;
+    }
+
     /* The dimmed value ("1×", "Off") on a highlighted row: 0.65 is 3.6:1 on the darkened accent, 0.85 is 5:1. */
     .media-menu-trigger-item:where(:focus-visible, [aria-expanded="true"], [data-highlighted]) .media-menu-hint-label {
       opacity: 0.85;
